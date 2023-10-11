@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <!-- Accueil -->
@@ -23,9 +24,9 @@
     <div class="mb-4">
       <Link class="group flex items-center py-3" :href="route('questions.index')">
       <Icon name="dashboard" class="mr-2 w-4 h-4"
-        :class="isUrl('quiz') ? 'fill-white' : 'fill-yellow-400 group-hover:fill-white'" />
+        :class="isUrl('questons') ? 'fill-white' : 'fill-yellow-400 group-hover:fill-white'" />
       <div
-        :class="isUrl('quiz') ? 'text-white' : 'text-yellow-300 group-hover:text-white'">
+        :class="isUrl('questions') ? 'text-white' : 'text-yellow-300 group-hover:text-white'">
         Quiz</div>
       </Link>
     </div>

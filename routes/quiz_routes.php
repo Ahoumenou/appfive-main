@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserAnswerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizzesController;
 use App\Http\Controllers\QuestionsController;
@@ -13,3 +14,4 @@ Route::middleware([
 });
 Route::resource('quizzes', QuizzesController::class);
 Route::resource('questions', QuestionsController::class)->only('index', 'store');
+Route::resource('submitAnswer', UserAnswerController::class)->only('store');

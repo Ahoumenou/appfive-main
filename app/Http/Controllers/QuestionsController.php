@@ -14,13 +14,15 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        // $quiz = quizzes::with(['questions','possible_answer'])->get();
+        // $quiz = quiz::with(['question','possible_answer'])->limit(10)->get();
+
         $quiz = quiz::with('question')->with('possible_answer', function ($query) {
             $query->with('question');
-        })->findOrFail(281632778);
+        })->findOrFail(930856238);
+
         // dd($quiz);
-        return Inertia::render('Questions/Index', [
-            'quiz' => $quiz,
+        return Inertia::render('Questions/question',[
+            'quiz' => $quiz
         ]);
     }
 

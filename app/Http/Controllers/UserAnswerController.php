@@ -28,7 +28,24 @@ class UserAnswerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'interne_user_id' => 'integer' ,
+            'externe_user_id' => 'integer',
+            'quiz_id' => 'required|integer',
+            'possible_answer_id' => 'required|integer',
+            'question_id' => 'required|integer',
+        ]);
+
+        $answer = new user_answer;
+        $answer->interne_user_id = $request->interne_user_id;
+        $answer->externe_user_id = $request->externe_user_id;
+        $answer->quiz_id = $request->quiz_id;
+        $answer->possible_answer_id = $request->input('possible_answer_id');
+        $answer->question_id = $request->$request->question_id;
+        // $answer->question_id = $request->input('questions_id');
+        $answer->save();
+       
+        return redirect()->route('/')->with('Vous venez de soumettre vos réponses');
     }
 
     /**
