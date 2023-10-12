@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\user_answer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserAnswerController extends Controller
 {
@@ -28,6 +29,8 @@ class UserAnswerController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
+
         $request->validate([
             'interne_user_id' => 'integer' ,
             'externe_user_id' => 'integer',
@@ -36,15 +39,28 @@ class UserAnswerController extends Controller
             'question_id' => 'required|integer',
         ]);
 
-        $answer = new user_answer;
-        $answer->interne_user_id = $request->interne_user_id;
-        $answer->externe_user_id = $request->externe_user_id;
-        $answer->quiz_id = $request->quiz_id;
-        $answer->possible_answer_id = $request->input('possible_answer_id');
-        $answer->question_id = $request->$request->question_id;
-        // $answer->question_id = $request->input('questions_id');
-        $answer->save();
+        // $answer = new user_answer;
+        // $answer->interne_user_id = $request->interne_user_id;
+        // $answer->externe_user_id = $request->externe_user_id;
+        // $answer->quiz_id = $request->quiz_id;
+        // $answer->possible_answer_id = $request->input('possible_answer_id');
+        // $answer->question_id = $request->$request->question_id;
+        // // $answer->question_id = $request->input('questions_id');
+        // $answer->save();
        
+        $selectedAnswers = collect($request->possible_answer_id)->map(function ($possible_answer_id) use ($request) {
+            return [
+                'interne_user_id' => $request->interne_user_id,
+                'externe_user_id' => $request->externe_user_id,
+                'quiz_id' => $request->quiz_id,
+                'possible_answer_id' => $request->possible_answer_id,
+                'questioan_id' => $request->question_id,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        });
+   
+        DB::table('user_answer')->insert($selectedAnswers->toArray());
         return redirect()->route('/')->with('Vous venez de soumettre vos réponses');
     }
 
